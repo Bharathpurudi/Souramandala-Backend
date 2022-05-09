@@ -1,6 +1,6 @@
 package com.souramandala.controller;
 
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.souramandala.entity.Customer;
-
+import com.souramandala.entity.OrderEntity;
 import com.souramandala.exception.CustomerException;
 import com.souramandala.service.CustomerServiceImpl;
 
@@ -51,11 +51,11 @@ public class CustomerController {
 	public String deleteCustomerById(@PathVariable int custId) {
 		return customerServiceImpl.deleteCustomerById(custId);
 	}
-	
+
 	/*
-	 * @GetMapping(value="/getordersofcust/{custId}", produces =
-	 * MediaType.APPLICATION_JSON_VALUE) public Iterable<OrderEntity>
-	 * getOrdersOfCustByCustId(int custId){ return
+	 * @GetMapping(value = "/getordersofcust/{custId}", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public List<OrderEntity>
+	 * getOrdersOfCustByCustId(int custId) { return
 	 * customerServiceImpl.getOrdersOfCustByCustId(custId); }
 	 */
 

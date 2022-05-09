@@ -33,7 +33,8 @@ public class OrderEntity {
 	@JoinColumn(name = "cust_id")
 	@JsonBackReference
 	private Customer customer;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int invoiceNum;
 	@Column(nullable = false)
 	private int orderAmount;

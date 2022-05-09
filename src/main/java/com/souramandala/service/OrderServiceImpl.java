@@ -27,8 +27,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public List<OrderEntity> getAllOrdersOfCust(int OrderId){
-		List<OrderEntity> orders = orderRepo.findByOrderIdNot(OrderId);
+	public List<OrderEntity> getAllOrdersOfCust(int custId){
+		List<OrderEntity> orders = orderRepo.findAllOrdsCustomer(custId);
 		if(orders != null) {
 			return orders;
 		}else {

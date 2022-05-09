@@ -2,14 +2,13 @@ package com.souramandala.repo;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.souramandala.entity.Customer;
 import com.souramandala.entity.OrderEntity;
 @Repository
-public interface CustomerRepo extends CrudRepository<Customer, Integer> {
+public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 	
 	
 	public Customer findBycustId(int custId);
@@ -25,6 +24,8 @@ public interface CustomerRepo extends CrudRepository<Customer, Integer> {
 	 * nativeQuery = true) public Customer getCustomerByUserNameAndPassword(String
 	 * userName, String userPassword);
 	 */
+	
+	//public List<OrderEntity> getAllOrders(int custId);
 	
 	
 

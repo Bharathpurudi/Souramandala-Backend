@@ -28,9 +28,9 @@ public class OrderController {
 		return orderServiceImpl.createOrder(orderEntity);
 	}
 	
-	@GetMapping(value="/getordersofcust/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<OrderEntity> getOrdersOfCust(@PathVariable int orderId){
-		return orderServiceImpl.getAllOrdersOfCust(orderId);
+	@GetMapping(value="/getordersofcust/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<OrderEntity> getOrdersOfCust(@PathVariable int custId){
+		return orderServiceImpl.getAllOrdersOfCust(custId);
 	}
 	
 	@ExceptionHandler(value = com.souramandala.exception.OrderException.class)

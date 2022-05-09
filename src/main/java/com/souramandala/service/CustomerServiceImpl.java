@@ -2,11 +2,13 @@ package com.souramandala.service;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.souramandala.entity.Customer;
-
+import com.souramandala.entity.OrderEntity;
 import com.souramandala.exception.CustomerException;
 import com.souramandala.repo.CustomerRepo;
 @Service
@@ -64,6 +66,13 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return "User Deleted Successfully";
 	}
+
+	/*
+	 * @Override public List<OrderEntity> getOrdersOfCustByCustId(int custId) throws
+	 * CustomerException { List<OrderEntity> orders =
+	 * customerRepo.getAllOrders(custId); if(orders!=null) { return orders; }else {
+	 * throw new CustomerException("No orders placed by that customer"); } }
+	 */
 
 	/*
 	 * @Override public Iterable<OrderEntity> getOrdersOfCustByCustId(int custId)
