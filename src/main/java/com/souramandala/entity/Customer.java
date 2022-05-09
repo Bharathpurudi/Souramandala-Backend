@@ -1,6 +1,7 @@
 package com.souramandala.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,15 +32,22 @@ public class Customer {
 	private String mobileNum;
 	@Column(nullable = false, unique = true)
 	private String mailId;
-	@JsonManagedReference
-	@OneToMany( fetch = FetchType.LAZY, mappedBy = "customer",cascade = CascadeType.ALL)
-	private List<OrderEntity> orders;
+	//@JsonManagedReference
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "customer_order",
+    joinColumns = {
+            @JoinColumn(name = "cust_id", referencedColumnName = "custId",
+                    nullable = false, updatable = false)},
+    inverseJoinColumns = {
+            @JoinColumn(name = "order_id", referencedColumnName = "orderId",
+                    nullable = false, updatable = false)})
+	private Set<OrderEntity> orders;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(int custId, String userName, String password, String mobileNum, String mailId, List<OrderEntity> orders) {
+	public Customer(int custId, String userName, String password, String mobileNum, String mailId, Set<OrderEntity> orders) {
 		super();
 		this.custId = custId;
 		this.userName = userName;
@@ -87,11 +97,11 @@ public class Customer {
 		this.mailId = mailId;
 	}
 
-	public List<OrderEntity> getOrders() {
+	public Set<OrderEntity> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<OrderEntity> orders) {
+	public void setOrders(Set<OrderEntity> orders) {
 		this.orders = orders;
 	}
 

@@ -3,6 +3,7 @@ package com.souramandala.service;
 
 
 import java.util.List;
+import java.util.Set;
 
 import com.souramandala.entity.Customer;
 import com.souramandala.entity.OrderEntity;
@@ -20,6 +21,8 @@ public interface CustomerService {
 	
 	public abstract String deleteCustomerById(int custId) throws CustomerException;
 	
-	//public abstract List<OrderEntity> getOrdersOfCustByCustId(int custId) throws CustomerException;
+	public abstract Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws CustomerException;
+	
+	//public abstract String validateTheOrdersOfCustomer(int custId) throws CustomerException;
 
 }

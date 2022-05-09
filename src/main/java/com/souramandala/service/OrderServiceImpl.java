@@ -2,6 +2,8 @@ package com.souramandala.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import com.souramandala.exception.OrderException;
 import com.souramandala.repo.OrderRepo;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepo orderRepo;

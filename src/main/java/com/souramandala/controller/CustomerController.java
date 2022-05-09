@@ -1,11 +1,11 @@
 package com.souramandala.controller;
 
-import java.util.List;
+
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.souramandala.entity.Customer;
 import com.souramandala.entity.OrderEntity;
-import com.souramandala.exception.CustomerException;
 import com.souramandala.service.CustomerServiceImpl;
 
 @RestController
@@ -52,16 +51,17 @@ public class CustomerController {
 		return customerServiceImpl.deleteCustomerById(custId);
 	}
 
+	@GetMapping(value = "/getordersofcust/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Set<OrderEntity> getOrdersOfCustByCustId(int custId) {
+		return customerServiceImpl.getOrdersOfCustByCustId(custId);
+	}
+
 	/*
-	 * @GetMapping(value = "/getordersofcust/{custId}", produces =
-	 * MediaType.APPLICATION_JSON_VALUE) public List<OrderEntity>
-	 * getOrdersOfCustByCustId(int custId) { return
-	 * customerServiceImpl.getOrdersOfCustByCustId(custId); }
+	 * @GetMapping(value = "/validateorders/{custId}") public String
+	 * validateOrdersOfCustomer(int custId) { return
+	 * customerServiceImpl.validateTheOrdersOfCustomer(custId); }
 	 */
 
-	@ExceptionHandler(value = com.souramandala.exception.CustomerException.class)
-	public String exceptionThrower(CustomerException customerException) {
-		return customerException.getMessage();
-	}
+	
 
 }

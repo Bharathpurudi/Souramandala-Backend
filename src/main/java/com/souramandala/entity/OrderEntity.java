@@ -1,8 +1,8 @@
 package com.souramandala.entity;
 
 import java.time.LocalDate;
-
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,15 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -29,10 +27,9 @@ public class OrderEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderId;
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "cust_id")
-	@JsonBackReference
-	private Customer customer;
+	@ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
+	//@JsonBackReference
+	private Set<Customer> customers;
 	@Column(nullable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int invoiceNum;
@@ -45,16 +42,23 @@ public class OrderEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate orderDate;
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order",cascade = CascadeType.ALL)
-	private List<Product> products;
+	//@JsonManagedReference
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "order_product",
+    joinColumns = {
+            @JoinColumn(name = "order_id", referencedColumnName = "orderId",
+                    nullable = false, updatable = false)},
+    inverseJoinColumns = {
+            @JoinColumn(name = "product_id", referencedColumnName = "productId",
+                    nullable = false, updatable = false)})
+	private Set<Product> products;
 
 	public OrderEntity() {
 		super();
 	}
 
 	public OrderEntity(int orderId, int invoiceNum, int orderAmount, int orderDiscount, int checkoutAmount,
-			LocalDate orderDate, List<Product> products) {
+			LocalDate orderDate, Set<Product> products) {
 		super();
 		this.orderId = orderId;
 		this.invoiceNum = invoiceNum;
@@ -113,11 +117,11 @@ public class OrderEntity {
 		this.orderDate = orderDate;
 	}
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 
