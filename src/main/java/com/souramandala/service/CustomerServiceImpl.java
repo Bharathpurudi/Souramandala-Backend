@@ -1,7 +1,7 @@
 package com.souramandala.service;
 
 import java.time.LocalDate;
-import java.util.List;
+
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -82,22 +82,34 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
-	/*
-	 * @Override public String validateTheOrdersOfCustomer(int custId) throws
-	 * CustomerException { Customer customer = customerRepo.findBycustId(custId);
-	 * String returnString = null; LocalDate currentDate = LocalDate.now(); if
-	 * (customer != null) { List<OrderEntity> orders =
-	 * getOrdersOfCustByCustId(custId); if (orders != null) { for (OrderEntity order
-	 * : orders) { List<Product> products = order.getProducts(); if (products !=
-	 * null) { for (Product product : products) { if
-	 * (product.getProductDoe().compareTo(currentDate) <= 0) {
-	 * product.setExpired(true); returnString = "Products expired are flagged"; } }
-	 * 
-	 * } } } else { throw new
-	 * CustomerException("No orders placed by that Customer"); } } else { throw new
-	 * CustomerException("No Customer with that customer Id"); }
-	 * 
-	 * return returnString; }
-	 */
+	@Override
+	public String validateTheOrdersOfCustomer(int custId) throws CustomerException {
+		Customer customer = customerRepo.findBycustId(custId);
+		String returnString = null;
+		LocalDate currentDate = LocalDate.now();
+		if (customer != null) {
+			Set<OrderEntity> orders = getOrdersOfCustByCustId(custId);
+			if (orders != null) {
+				for (OrderEntity order : orders) {
+					Set<Product> products = order.getProducts();
+					if (products != null) {
+						for (Product product : products) {
+							if (product.getProductDoe().compareTo(currentDate) <= 0) {
+								product.setExpired(true);
+								returnString = "Products expired are flagged, Kindly check and remove from order";
+							}
+						}
+
+					}
+				}
+			} else {
+				throw new CustomerException("No orders placed by that Customer");
+			}
+		} else {
+			throw new CustomerException("No Customer with that customer Id");
+		}
+
+		return returnString;
+	}
 
 }

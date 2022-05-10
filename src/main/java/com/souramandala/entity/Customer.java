@@ -1,6 +1,5 @@
 package com.souramandala.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,10 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "customer")
@@ -42,6 +42,9 @@ public class Customer {
             @JoinColumn(name = "order_id", referencedColumnName = "orderId",
                     nullable = false, updatable = false)})
 	private Set<OrderEntity> orders;
+	@JsonManagedReference
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+	private Cart cart;
 
 	public Customer() {
 		super();

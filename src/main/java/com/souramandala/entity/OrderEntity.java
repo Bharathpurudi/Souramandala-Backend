@@ -1,7 +1,6 @@
 package com.souramandala.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,7 +18,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "order_entity")
@@ -52,6 +51,10 @@ public class OrderEntity {
             @JoinColumn(name = "product_id", referencedColumnName = "productId",
                     nullable = false, updatable = false)})
 	private Set<Product> products;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cart_id", referencedColumnName = "cartId", nullable = false)
+	@JsonBackReference
+	private Cart cart;
 
 	public OrderEntity() {
 		super();

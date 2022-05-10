@@ -1,6 +1,5 @@
 package com.souramandala.controller;
 
-
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.souramandala.entity.Cart;
 import com.souramandala.entity.Customer;
 import com.souramandala.entity.OrderEntity;
+import com.souramandala.service.CartServiceImpl;
 import com.souramandala.service.CustomerServiceImpl;
 
 @RestController
@@ -23,6 +24,8 @@ import com.souramandala.service.CustomerServiceImpl;
 public class CustomerController {
 	@Autowired
 	private CustomerServiceImpl customerServiceImpl;
+	@Autowired
+	private CartServiceImpl cartServiceImpl;
 
 	@PostMapping(value = "/createcustomer", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createCustomer(@RequestBody Customer customer) {
@@ -56,12 +59,14 @@ public class CustomerController {
 		return customerServiceImpl.getOrdersOfCustByCustId(custId);
 	}
 
-	/*
-	 * @GetMapping(value = "/validateorders/{custId}") public String
-	 * validateOrdersOfCustomer(int custId) { return
-	 * customerServiceImpl.validateTheOrdersOfCustomer(custId); }
-	 */
-
+	@GetMapping(value = "/validateorders/{custId}")
+	public String validateOrdersOfCustomer(int custId) {
+		return customerServiceImpl.validateTheOrdersOfCustomer(custId);
+	}
 	
+	@PostMapping(value="createcartofcustomer/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Cart postThecartOfCustomer(int custId) {
+		return cartServiceImpl.checkoutCart(custId);
+	}
 
 }

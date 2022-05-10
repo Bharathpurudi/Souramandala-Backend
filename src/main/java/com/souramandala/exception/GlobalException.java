@@ -12,7 +12,7 @@ import com.souramandala.entity.ResponseError;
 @ControllerAdvice
 public class GlobalException {
 	@ExceptionHandler(value = CustomerException.class)
-	public ResponseEntity<ResponseError>customerErrorThrowing(CustomerException customerException,
+	public ResponseEntity<ResponseError> customerErrorThrowing(CustomerException customerException,
 			HttpServletRequest httpServletRequest) {
 		ResponseError error = new ResponseError(customerException.getMessage(), httpServletRequest.getRequestURI());
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);

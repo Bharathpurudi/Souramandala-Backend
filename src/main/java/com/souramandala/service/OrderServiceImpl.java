@@ -1,6 +1,8 @@
 package com.souramandala.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.souramandala.entity.OrderEntity;
+import com.souramandala.entity.Product;
 import com.souramandala.exception.OrderException;
 import com.souramandala.repo.OrderRepo;
 
@@ -37,6 +40,24 @@ public class OrderServiceImpl implements OrderService {
 		}else {
 			throw new OrderException("No orders for the given cust id");
 		}
+	}
+
+	@Override
+	public List<Product> getAllProductsOfCust(int custId) throws OrderException {
+		List<Product> products=new ArrayList<Product>();
+		List<OrderEntity> orders = getAllOrdersOfCust(custId);
+		if(orders!=null) {
+			for (OrderEntity orderEntity : orders) {
+				Set<Product> prods = orderEntity.getProducts();
+				for (Product prod : prods) {
+					products.add(prod);
+				}
+			}
+		}else {
+			throw new OrderException("No Orders Placed By customer");
+		}
+		
+		return products;
 	}
 
 	
