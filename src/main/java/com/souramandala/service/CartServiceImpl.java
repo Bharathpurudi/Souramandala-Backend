@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService {
 			throw new OrderException("No items in the cart. Do shopping and add products");
 		}
 		LocalDate deliveryDate= orderDate.plusDays(7);
-		Cart cart= new Cart(custId, orders, deliveryCharge, orderAmount, discountAmount, checkOutAmount+deliveryCharge, deliveryDate);
+		Cart cart= new Cart(custId, deliveryCharge, orderAmount, discountAmount, checkOutAmount+deliveryCharge, deliveryDate);
 		return cartRepo.save(cart);
 	}
 

@@ -26,9 +26,10 @@ public class OrderEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderId;
-	@ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
-	//@JsonBackReference
-	private Set<Customer> customers;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="cust_id",nullable = false, referencedColumnName = "custId")
+	@JsonBackReference
+	private Customer customer;
 	@Column(nullable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int invoiceNum;
@@ -51,10 +52,7 @@ public class OrderEntity {
             @JoinColumn(name = "product_id", referencedColumnName = "productId",
                     nullable = false, updatable = false)})
 	private Set<Product> products;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cart_id", referencedColumnName = "cartId", nullable = false)
-	@JsonBackReference
-	private Cart cart;
+	
 
 	public OrderEntity() {
 		super();

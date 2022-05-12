@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,15 +33,8 @@ public class Customer {
 	private String mobileNum;
 	@Column(nullable = false, unique = true)
 	private String mailId;
-	//@JsonManagedReference
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "customer_order",
-    joinColumns = {
-            @JoinColumn(name = "cust_id", referencedColumnName = "custId",
-                    nullable = false, updatable = false)},
-    inverseJoinColumns = {
-            @JoinColumn(name = "order_id", referencedColumnName = "orderId",
-                    nullable = false, updatable = false)})
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
 	private Set<OrderEntity> orders;
 	@JsonManagedReference
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)

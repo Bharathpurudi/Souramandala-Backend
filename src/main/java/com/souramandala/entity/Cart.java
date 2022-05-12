@@ -3,7 +3,6 @@ package com.souramandala.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,6 +15,7 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Cart {
 	@Id
@@ -25,33 +25,27 @@ public class Cart {
 	@JoinColumn(name = "cust_id", referencedColumnName = "custId")
 	@JsonBackReference
 	private Customer customer;
-	@JsonManagedReference
-	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
-	private List<OrderEntity> orders;
 	private int deliveryCharge;
 	private int orderAmount;
 	private int totalDiscountApplied;
 	private int checkoutAmount;
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	private LocalDate dateOfDelivery;
-	
+
 	public Cart() {
 		super();
 	}
 
-	public Cart(int cartId, List<OrderEntity> orders,int deliveryCharge , int orderAmount, int totalDiscountApplied,
-			int checkoutAmount, LocalDate dateOfDelivery) {
+	public Cart(int cartId, int deliveryCharge, int orderAmount, int totalDiscountApplied, int checkoutAmount,
+			LocalDate dateOfDelivery) {
 		super();
 		this.cartId = cartId;
-		this.orders = orders;
 		this.orderAmount = orderAmount;
 		this.totalDiscountApplied = totalDiscountApplied;
 		this.checkoutAmount = checkoutAmount;
 		this.dateOfDelivery = dateOfDelivery;
-		this.deliveryCharge=deliveryCharge;
+		this.deliveryCharge = deliveryCharge;
 	}
-
-
 
 	public int getCartId() {
 		return cartId;
@@ -65,7 +59,6 @@ public class Cart {
 		return deliveryCharge;
 	}
 
-	
 	public void setDeliveryCharge(int deliveryCharge) {
 		this.deliveryCharge = deliveryCharge;
 	}
@@ -101,17 +94,5 @@ public class Cart {
 	public void setDateOfDelivery(LocalDate dateOfDelivery) {
 		this.dateOfDelivery = dateOfDelivery;
 	}
-
-	public List<OrderEntity> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<OrderEntity> orders) {
-		this.orders = orders;
-	}
-	
-
-	
-	
 
 }
