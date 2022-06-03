@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.souramandala.entity.OrderEntity;
-import com.souramandala.entity.Product;
 import com.souramandala.service.OrderServiceImpl;
 
 @RestController
@@ -32,10 +31,12 @@ public class OrderController {
 		return orderServiceImpl.getAllOrdersOfCust(custId);
 	}
 	
-	@GetMapping(value="/getproductsofcust/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Product> getAllProductsOfCust(@PathVariable int custId){
-		return orderServiceImpl.getAllProductsOfCust(custId);
-	}
+	/*
+	 * @GetMapping(value="/getproductsofcust/{custId}", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public List<Product>
+	 * getAllProductsOfCust(@PathVariable int custId){ return
+	 * orderServiceImpl.getAllProductsOfCust(custId); }
+	 */
 	
 	
 	

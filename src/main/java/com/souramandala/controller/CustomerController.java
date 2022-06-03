@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,60 +14,61 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.souramandala.entity.Cart;
+
 import com.souramandala.entity.Customer;
 import com.souramandala.entity.OrderEntity;
-import com.souramandala.service.CartServiceImpl;
-import com.souramandala.service.CustomerServiceImpl;
+import com.souramandala.service.CustomerService;
+
 
 @RestController
-@RequestMapping(value = "/souramandala")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(value = "/api")
 public class CustomerController {
 	@Autowired
-	private CustomerServiceImpl customerServiceImpl;
-	@Autowired
-	private CartServiceImpl cartServiceImpl;
+	private CustomerService customerService;
+	
+	
 
-	@PostMapping(value = "/createcustomer", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createCustomer(@RequestBody Customer customer) {
-		return customerServiceImpl.createUser(customer);
+		return customerService.createUser(customer);
 	}
 
-	@GetMapping(value = "/getcustomerbyid/{custId}")
+	@GetMapping(value = "/customer/{custId}")
 	public Customer getCustomerById(@PathVariable int custId) {
 
-		return customerServiceImpl.getCustomerById(custId);
+		return customerService.getCustomerById(custId);
 
 	}
 
-	@GetMapping(value = "/getcustomerbynameandpass/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/customer/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Customer getCustomerByUsernameAndPassword(@PathVariable String userName, @PathVariable String password) {
-		return customerServiceImpl.getCustomerByUsernameAndPassword(userName, password);
+		return customerService.getCustomerByUsernameAndPassword(userName, password);
 	}
 
-	@PutMapping(value = "/updatecustomer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/customer/updatecustomer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Customer updateCustomer(@RequestBody Customer customer) {
-		return customerServiceImpl.updateCustomerDetails(customer);
+		return customerService.updateCustomerDetails(customer);
 	}
 
-	@DeleteMapping(value = "/deletevaluebyid/{custId}")
+	@DeleteMapping(value = "/customer/deletebyid/{custId}")
 	public String deleteCustomerById(@PathVariable int custId) {
-		return customerServiceImpl.deleteCustomerById(custId);
+		return customerService.deleteCustomerById(custId);
 	}
 
-	@GetMapping(value = "/getordersofcust/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<OrderEntity> getOrdersOfCustByCustId(int custId) {
-		return customerServiceImpl.getOrdersOfCustByCustId(custId);
-	}
+	/*
+	 * @GetMapping(value = "/getordersofcust/{custId}", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public Set<OrderEntity>
+	 * getOrdersOfCustByCustId(int custId) { return
+	 * customerService.getOrdersOfCustByCustId(custId); }
+	 */
 
-	@GetMapping(value = "/validateorders/{custId}")
-	public String validateOrdersOfCustomer(int custId) {
-		return customerServiceImpl.validateTheOrdersOfCustomer(custId);
-	}
+	/*
+	 * @GetMapping(value = "/customer/validateorders/{custId}") public String
+	 * validateOrdersOfCustomer(int custId) { return
+	 * customerService.validateTheOrdersOfCustomer(custId); }
+	 */
 	
-	@PostMapping(value="createcartofcustomer/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Cart postThecartOfCustomer(int custId) {
-		return cartServiceImpl.checkoutCart(custId);
-	}
+	
 
 }

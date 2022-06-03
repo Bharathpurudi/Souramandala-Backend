@@ -1,7 +1,7 @@
 package com.souramandala.entity;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,13 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 @Entity
@@ -26,9 +28,6 @@ public class OrderEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderId;
-	@ManyToMany(mappedBy = "orders", fetch = FetchType.LAZY)
-	//@JsonBackReference
-	private Set<Customer> customers;
 	@Column(nullable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int invoiceNum;
@@ -41,27 +40,20 @@ public class OrderEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate orderDate;
-	//@JsonManagedReference
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "order_product",
-    joinColumns = {
-            @JoinColumn(name = "order_id", referencedColumnName = "orderId",
-                    nullable = false, updatable = false)},
-    inverseJoinColumns = {
-            @JoinColumn(name = "product_id", referencedColumnName = "productId",
-                    nullable = false, updatable = false)})
-	private Set<Product> products;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cart_id", referencedColumnName = "cartId", nullable = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "orderEntity")
+	private List<OrderProducts> orderProducts;
+	@OneToOne
+	@JoinColumn(name = "cart_id")
 	@JsonBackReference
 	private Cart cart;
+	
 
 	public OrderEntity() {
 		super();
 	}
 
 	public OrderEntity(int orderId, int invoiceNum, int orderAmount, int orderDiscount, int checkoutAmount,
-			LocalDate orderDate, Set<Product> products) {
+			LocalDate orderDate,List<OrderProducts> orderProducts ) {
 		super();
 		this.orderId = orderId;
 		this.invoiceNum = invoiceNum;
@@ -69,7 +61,7 @@ public class OrderEntity {
 		this.orderDiscount = orderDiscount;
 		this.checkoutAmount = checkoutAmount;
 		this.orderDate = orderDate;
-		this.setProducts(products);
+		this.orderProducts=orderProducts;
 	}
 
 	public int getOrderId() {
@@ -120,12 +112,14 @@ public class OrderEntity {
 		this.orderDate = orderDate;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
+	public List<OrderProducts> getOrderProducts() {
+		return orderProducts;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public void setOrderProducts(List<OrderProducts> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
+
+	
 
 }

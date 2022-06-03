@@ -16,10 +16,6 @@ public class Warranty {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int warrantyId;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_id")
-	@JsonBackReference
-	private Product product;
 	@Column(nullable = false)
 	private int warrantyMonths;
 	@Column(nullable = false)
@@ -30,9 +26,7 @@ public class Warranty {
 	}
 
 	public Warranty(int warrantyId, int warrantyMonths, String warrantyType) {
-		super();
 		this.warrantyId = warrantyId;
-
 		this.warrantyMonths = warrantyMonths;
 		this.warrantyType = warrantyType;
 	}

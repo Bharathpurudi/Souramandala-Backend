@@ -72,44 +72,31 @@ public class CustomerServiceImpl implements CustomerService {
 		return "User Deleted Successfully";
 	}
 
-	@Override
-	public Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws CustomerException {
-		Set<OrderEntity> orders = customerRepo.findBycustId(custId).getOrders();
-		if (orders != null) {
-			return orders;
-		} else {
-			throw new CustomerException("No orders placed by that customer");
-		}
-	}
+	/*
+	 * @Override public Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws
+	 * CustomerException { Set<OrderEntity> orders =
+	 * customerRepo.findBycustId(custId).getOrders(); if (orders != null) { return
+	 * orders; } else { throw new
+	 * CustomerException("No orders placed by that customer"); } }
+	 */
 
-	@Override
-	public String validateTheOrdersOfCustomer(int custId) throws CustomerException {
-		Customer customer = customerRepo.findBycustId(custId);
-		String returnString = null;
-		LocalDate currentDate = LocalDate.now();
-		if (customer != null) {
-			Set<OrderEntity> orders = getOrdersOfCustByCustId(custId);
-			if (orders != null) {
-				for (OrderEntity order : orders) {
-					Set<Product> products = order.getProducts();
-					if (products != null) {
-						for (Product product : products) {
-							if (product.getProductDoe().compareTo(currentDate) <= 0) {
-								product.setExpired(true);
-								returnString = "Products expired are flagged, Kindly check and remove from order";
-							}
-						}
-
-					}
-				}
-			} else {
-				throw new CustomerException("No orders placed by that Customer");
-			}
-		} else {
-			throw new CustomerException("No Customer with that customer Id");
-		}
-
-		return returnString;
-	}
+	/*
+	 * @Override public String validateTheOrdersOfCustomer(int custId) throws
+	 * CustomerException { Customer customer = customerRepo.findBycustId(custId);
+	 * String returnString = null; LocalDate currentDate = LocalDate.now(); if
+	 * (customer != null) { Set<OrderEntity> orders =
+	 * getOrdersOfCustByCustId(custId); if (orders != null) { for (OrderEntity order
+	 * : orders) { Set<Product> products = order.getProducts(); if (products !=
+	 * null) { for (Product product : products) { if
+	 * (product.getProductDoe().compareTo(currentDate) <= 0) {
+	 * product.setExpired(true); returnString =
+	 * "Products expired are flagged, Kindly check and remove from order"; } }
+	 * 
+	 * } } } else { throw new
+	 * CustomerException("No orders placed by that Customer"); } } else { throw new
+	 * CustomerException("No Customer with that customer Id"); }
+	 * 
+	 * return returnString; }
+	 */
 
 }
