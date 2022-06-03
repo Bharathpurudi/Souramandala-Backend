@@ -14,6 +14,6 @@ public interface OrderService {
 	
 	public abstract List<OrderEntity> getAllOrdersOfCust(int custId) throws OrderException;
 	
-	public abstract List<Product> getAllProductsOfCust(int custId) throws OrderException;
+	//public abstract List<Product> getAllProductsOfCust(int custId) throws OrderException;
 
 }

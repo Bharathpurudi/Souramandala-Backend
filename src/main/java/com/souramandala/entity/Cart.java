@@ -1,50 +1,40 @@
 package com.souramandala.entity;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cart {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartId;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cust_id", referencedColumnName = "custId")
+	@OneToOne
+	@JoinColumn(name = "cust_id")
 	@JsonBackReference
 	private Customer customer;
-	private int deliveryCharge;
-	private int orderAmount;
-	private int totalDiscountApplied;
-	private int checkoutAmount;
-	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-	private LocalDate dateOfDelivery;
+	@JsonManagedReference
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "cart", cascade = CascadeType.ALL)
+	private OrderEntity orderEntity;
+
+	public Cart(int cartId, Customer customer) {
+		super();
+		this.cartId = cartId;
+		this.customer = customer;
+	}
 
 	public Cart() {
 		super();
-	}
-
-	public Cart(int cartId, int deliveryCharge, int orderAmount, int totalDiscountApplied, int checkoutAmount,
-			LocalDate dateOfDelivery) {
-		super();
-		this.cartId = cartId;
-		this.orderAmount = orderAmount;
-		this.totalDiscountApplied = totalDiscountApplied;
-		this.checkoutAmount = checkoutAmount;
-		this.dateOfDelivery = dateOfDelivery;
-		this.deliveryCharge = deliveryCharge;
 	}
 
 	public int getCartId() {
@@ -55,44 +45,26 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-	public int getDeliveryCharge() {
-		return deliveryCharge;
+
+	public OrderEntity getOrderEntity() {
+		return orderEntity;
 	}
 
-	public void setDeliveryCharge(int deliveryCharge) {
-		this.deliveryCharge = deliveryCharge;
+	/*
+	 * public void setOrderEntity(OrderEntity orderEntity) { this.orderEntity =
+	 * orderEntity; }
+	 */
+
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public int getOrderAmount() {
-		return orderAmount;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
-
-	public void setOrderAmount(int orderAmount) {
-		this.orderAmount = orderAmount;
-	}
-
-	public int getTotalDiscountApplied() {
-		return totalDiscountApplied;
-	}
-
-	public void setTotalDiscountApplied(int totalDiscountApplied) {
-		this.totalDiscountApplied = totalDiscountApplied;
-	}
-
-	public int getCheckoutAmount() {
-		return checkoutAmount;
-	}
-
-	public void setCheckoutAmount(int checkoutAmount) {
-		this.checkoutAmount = checkoutAmount;
-	}
-
-	public LocalDate getDateOfDelivery() {
-		return dateOfDelivery;
-	}
-
-	public void setDateOfDelivery(LocalDate dateOfDelivery) {
-		this.dateOfDelivery = dateOfDelivery;
-	}
+	
+	/*
+	 * public void setCustId(int custId) { this.customer.setCustId(custId); }
+	 */
 
 }

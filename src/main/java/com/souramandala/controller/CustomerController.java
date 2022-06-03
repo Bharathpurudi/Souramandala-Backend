@@ -27,6 +27,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
+	
 
 	@PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createCustomer(@RequestBody Customer customer) {
@@ -40,30 +41,33 @@ public class CustomerController {
 
 	}
 
-	@GetMapping(value = "/getcustomerbynameandpass/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/customer/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Customer getCustomerByUsernameAndPassword(@PathVariable String userName, @PathVariable String password) {
 		return customerService.getCustomerByUsernameAndPassword(userName, password);
 	}
 
-	@PutMapping(value = "/updatecustomer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/customer/updatecustomer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Customer updateCustomer(@RequestBody Customer customer) {
 		return customerService.updateCustomerDetails(customer);
 	}
 
-	@DeleteMapping(value = "/deletevaluebyid/{custId}")
+	@DeleteMapping(value = "/customer/deletebyid/{custId}")
 	public String deleteCustomerById(@PathVariable int custId) {
 		return customerService.deleteCustomerById(custId);
 	}
 
-	@GetMapping(value = "/getordersofcust/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<OrderEntity> getOrdersOfCustByCustId(int custId) {
-		return customerService.getOrdersOfCustByCustId(custId);
-	}
+	/*
+	 * @GetMapping(value = "/getordersofcust/{custId}", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public Set<OrderEntity>
+	 * getOrdersOfCustByCustId(int custId) { return
+	 * customerService.getOrdersOfCustByCustId(custId); }
+	 */
 
-	@GetMapping(value = "/validateorders/{custId}")
-	public String validateOrdersOfCustomer(int custId) {
-		return customerService.validateTheOrdersOfCustomer(custId);
-	}
+	/*
+	 * @GetMapping(value = "/customer/validateorders/{custId}") public String
+	 * validateOrdersOfCustomer(int custId) { return
+	 * customerService.validateTheOrdersOfCustomer(custId); }
+	 */
 	
 	
 

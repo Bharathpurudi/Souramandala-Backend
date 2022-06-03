@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -40,9 +41,14 @@ public class Customer {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
-	private Set<OrderEntity> orders;
+	/*
+	 * //@JsonManagedReference(value = "cust-order")
+	 * 
+	 * @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+	 * "customer") private Set<OrderEntity> orders;
+	 */
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+	private Cart cart;
 
 	public Customer() {
 		super();
@@ -134,12 +140,10 @@ public class Customer {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Set<OrderEntity> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Set<OrderEntity> orders) {
-		this.orders = orders;
-	}
+	/*
+	 * public Set<OrderEntity> getOrders() { return orders; }
+	 * 
+	 * public void setOrders(Set<OrderEntity> orders) { this.orders = orders; }
+	 */
 
 }

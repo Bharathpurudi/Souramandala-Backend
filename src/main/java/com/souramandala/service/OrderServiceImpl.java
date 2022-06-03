@@ -42,23 +42,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
-	@Override
-	public List<Product> getAllProductsOfCust(int custId) throws OrderException {
-		List<Product> products=new ArrayList<Product>();
-		List<OrderEntity> orders = getAllOrdersOfCust(custId);
-		if(orders!=null) {
-			for (OrderEntity orderEntity : orders) {
-				Set<Product> prods = orderEntity.getProducts();
-				for (Product prod : prods) {
-					products.add(prod);
-				}
-			}
-		}else {
-			throw new OrderException("No Orders Placed By customer");
-		}
-		
-		return products;
-	}
+	/*
+	 * @Override public List<Product> getAllProductsOfCust(int custId) throws
+	 * OrderException { List<Product> products=new ArrayList<Product>();
+	 * List<OrderEntity> orders = getAllOrdersOfCust(custId); if(orders!=null) { for
+	 * (OrderEntity orderEntity : orders) { Set<Product> prods =
+	 * orderEntity.getProducts(); for (Product prod : prods) { products.add(prod); }
+	 * } }else { throw new OrderException("No Orders Placed By customer"); }
+	 * 
+	 * return products; }
+	 */
 
 	
 
