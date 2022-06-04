@@ -41,12 +41,6 @@ public class Customer {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
-	/*
-	 * //@JsonManagedReference(value = "cust-order")
-	 * 
-	 * @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
-	 * "customer") private Set<OrderEntity> orders;
-	 */
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
 	private Cart cart;
 

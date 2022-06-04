@@ -40,7 +40,8 @@ public class OrderEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate orderDate;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "orderEntity")
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderEntity")
 	private List<OrderProducts> orderProducts;
 	@OneToOne
 	@JoinColumn(name = "cart_id")

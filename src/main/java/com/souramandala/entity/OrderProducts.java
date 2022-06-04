@@ -18,8 +18,9 @@ public class OrderProducts {
 	private int orderProductsId;
 	private int productId;
 	private int quantity;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id", nullable = false, referencedColumnName = "orderId")
+	@JsonBackReference
 	private OrderEntity orderEntity;
 
 	public OrderProducts() {
