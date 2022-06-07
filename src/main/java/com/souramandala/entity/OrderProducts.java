@@ -1,6 +1,5 @@
 package com.souramandala.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,7 @@ public class OrderProducts {
 	private int orderProductsId;
 	private int productId;
 	private int quantity;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id", nullable = false, referencedColumnName = "orderId")
 	@JsonBackReference
 	private OrderEntity orderEntity;
@@ -57,5 +56,6 @@ public class OrderProducts {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
 
 }
