@@ -1,7 +1,7 @@
 package com.souramandala.entity;
 
 import java.time.LocalDate;
-import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,13 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "customer")
@@ -24,7 +24,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int custId;
-	@Column(nullable = false)
+	@Column(nullable = false)                                                                                                                                                              
 	private String firstName;
 	@Column(nullable = false)
 	private String lastName;
@@ -41,7 +41,7 @@ public class Customer {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Cart cart;
 
 	public Customer() {
@@ -134,10 +134,5 @@ public class Customer {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	/*
-	 * public Set<OrderEntity> getOrders() { return orders; }
-	 * 
-	 * public void setOrders(Set<OrderEntity> orders) { this.orders = orders; }
-	 */
 
 }

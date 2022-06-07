@@ -13,14 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
 
 @Entity
 @Table(name = "order_entity")
@@ -43,18 +40,17 @@ public class OrderEntity {
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderEntity")
 	private List<OrderProducts> orderProducts;
-	@OneToOne
-	@JoinColumn(name = "cart_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cart_id", nullable = false, referencedColumnName = "cartId")
 	@JsonBackReference
 	private Cart cart;
-	
 
 	public OrderEntity() {
 		super();
 	}
 
 	public OrderEntity(int orderId, int invoiceNum, int orderAmount, int orderDiscount, int checkoutAmount,
-			LocalDate orderDate,List<OrderProducts> orderProducts ) {
+			LocalDate orderDate, List<OrderProducts> orderProducts) {
 		super();
 		this.orderId = orderId;
 		this.invoiceNum = invoiceNum;
@@ -62,7 +58,7 @@ public class OrderEntity {
 		this.orderDiscount = orderDiscount;
 		this.checkoutAmount = checkoutAmount;
 		this.orderDate = orderDate;
-		this.orderProducts=orderProducts;
+		this.orderProducts = orderProducts;
 	}
 
 	public int getOrderId() {
@@ -120,7 +116,5 @@ public class OrderEntity {
 	public void setOrderProducts(List<OrderProducts> orderProducts) {
 		this.orderProducts = orderProducts;
 	}
-
-	
 
 }

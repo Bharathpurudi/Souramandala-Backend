@@ -16,8 +16,22 @@ public class CartServiceImpl implements CartService {
 	
 	@Override
 	public String createCart(Cart cart) throws CustomerException {
-		cartRepo.save(cart);
+		cartRepo.saveAndFlush(cart);
 		return "Cart Added Successfully";
+	}
+
+	@Override
+	public int getTheCartId(int CustId) throws CustomerException {
+		Cart temp= cartRepo.findCartIdByCustId(CustId);
+		int ret=0;
+		if(temp!=null) {
+			ret=temp.getCartId();
+		}else {
+			ret=0;
+		}
+		return ret;
+		
+		
 	}
 
 }

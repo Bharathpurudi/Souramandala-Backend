@@ -1,5 +1,7 @@
 package com.souramandala.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,9 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -24,17 +25,17 @@ public class Cart {
 	@JsonBackReference
 	private Customer customer;
 	@JsonManagedReference
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "cart", cascade = CascadeType.ALL)
-	private OrderEntity orderEntity;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cart", cascade = CascadeType.ALL)
+	private List<OrderEntity> orderEntities;
 
+	public Cart() {
+		super();
+	}
+	
 	public Cart(int cartId, Customer customer) {
 		super();
 		this.cartId = cartId;
 		this.customer = customer;
-	}
-
-	public Cart() {
-		super();
 	}
 
 	public int getCartId() {
@@ -45,16 +46,6 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-
-	public OrderEntity getOrderEntity() {
-		return orderEntity;
-	}
-
-	/*
-	 * public void setOrderEntity(OrderEntity orderEntity) { this.orderEntity =
-	 * orderEntity; }
-	 */
-
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -62,9 +53,13 @@ public class Cart {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
-	/*
-	 * public void setCustId(int custId) { this.customer.setCustId(custId); }
-	 */
+
+	public List<OrderEntity> getOrderEntities() {
+		return orderEntities;
+	}
+
+	public void setOrderEntities(List<OrderEntity> orderEntities) {
+		this.orderEntities = orderEntities;
+	}
 
 }
