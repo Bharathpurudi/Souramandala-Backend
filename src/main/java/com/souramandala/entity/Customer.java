@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Customer {
 	private String userName;
 	@Column(nullable = false)
 	private char gender;
-	@Column(nullable = false, unique = true, columnDefinition = "varchar(25) default 'Reset123'")
+	@Column(nullable = false, unique = true, columnDefinition = "VARCHAR(600) default 'Reset123'")
 	private String password;
 	@Column(nullable = false, unique = true)
 	private String mobileNum;

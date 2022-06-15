@@ -25,7 +25,7 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
-	
+	 
 	@PostMapping(value="product/createProduct", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createProduct(@RequestBody Product product) {
 		return productService.createProduct(product);
@@ -45,6 +45,11 @@ public class ProductController {
 	public List<Product> getAllProductsLike(@PathVariable String catName){
 		return productService.getAllProductsLike(catName);
 	}
+	
+	@GetMapping(value="product/getAllProducts")
+		public List<Product> getAllProducts(){
+			return productService.getAllProducts();
+		}
 	
 	
 	/*

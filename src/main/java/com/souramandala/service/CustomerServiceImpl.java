@@ -1,8 +1,6 @@
 package com.souramandala.service;
 
-import java.time.LocalDate;
 
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -10,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.souramandala.entity.Customer;
-import com.souramandala.entity.OrderEntity;
-import com.souramandala.entity.Product;
 import com.souramandala.exception.CustomerException;
 import com.souramandala.repo.CustomerRepo;
 
@@ -38,8 +34,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer getCustomerByUsernameAndPassword(String userName, String password) throws CustomerException {
-		Customer customer = customerRepo.findByuserNameAndPassword(userName, password);
+	public Customer getCustomerByUsername(String userName) throws CustomerException {
+		Customer customer = customerRepo.findByuserName(userName);
 		if (customer != null) {
 			return customer;
 		} else {

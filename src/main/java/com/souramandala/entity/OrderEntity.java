@@ -25,9 +25,8 @@ public class OrderEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderId;
-	@Column(nullable = false, unique = true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int invoiceNum;
+	@Column(nullable = false)
+	private String invoiceNum;
 	@Column(nullable = false)
 	private int orderAmount;
 	@Column(nullable = false)
@@ -49,7 +48,7 @@ public class OrderEntity {
 		super();
 	}
 
-	public OrderEntity(int orderId, int invoiceNum, int orderAmount, int orderDiscount, int checkoutAmount,
+	public OrderEntity(int orderId, String invoiceNum, int orderAmount, int orderDiscount, int checkoutAmount,
 			LocalDate orderDate, List<OrderProducts> orderProducts) {
 		super();
 		this.orderId = orderId;
@@ -69,11 +68,11 @@ public class OrderEntity {
 		this.orderId = orderId;
 	}
 
-	public int getInvoiceNum() {
+	public String getInvoiceNum() {
 		return invoiceNum;
 	}
 
-	public void setInvoiceNum(int invoiceNum) {
+	public void setInvoiceNum(String invoiceNum) {
 		this.invoiceNum = invoiceNum;
 	}
 

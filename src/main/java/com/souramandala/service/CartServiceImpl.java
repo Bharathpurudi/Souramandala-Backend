@@ -34,4 +34,9 @@ public class CartServiceImpl implements CartService {
 		
 	}
 
+	@Override
+	public Cart getCustomerCart(int cartId) throws CustomerException {
+		return this.cartRepo.findBycartId(cartId);
+	}
+
 }

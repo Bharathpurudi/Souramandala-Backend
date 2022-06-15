@@ -1,8 +1,7 @@
 package com.souramandala.service;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 
 import com.souramandala.entity.OrderEntity;
-import com.souramandala.entity.Product;
 import com.souramandala.exception.OrderException;
 import com.souramandala.repo.OrderRepo;
 
