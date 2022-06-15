@@ -2,10 +2,9 @@ package com.souramandala.service;
 
 
 
-import java.util.Set;
+
 
 import com.souramandala.entity.Customer;
-import com.souramandala.entity.OrderEntity;
 import com.souramandala.exception.CustomerException;
 
 public interface CustomerService {
@@ -14,7 +13,7 @@ public interface CustomerService {
 	
 	public abstract Customer getCustomerById(int custId) throws CustomerException;
 	
-	public abstract Customer getCustomerByUsernameAndPassword(String userName, String password) throws CustomerException;
+	public abstract Customer getCustomerByUsername(String userName) throws CustomerException;
 	
 	public abstract Customer updateCustomerDetails(Customer customer) throws CustomerException;
 	

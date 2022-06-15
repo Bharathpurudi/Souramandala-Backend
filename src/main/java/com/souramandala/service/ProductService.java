@@ -17,6 +17,8 @@ public interface ProductService {
 	
 	public abstract List<Product> getAllProductsLike(String categoryName);
 	
+	public abstract List<Product> getAllProducts();
+	
 	//public abstract String updateProductQuantity());
 
 }

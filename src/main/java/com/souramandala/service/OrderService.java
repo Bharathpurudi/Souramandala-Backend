@@ -4,7 +4,6 @@ import java.util.List;
 
 
 import com.souramandala.entity.OrderEntity;
-import com.souramandala.entity.Product;
 import com.souramandala.exception.OrderException;
 
 public interface OrderService {

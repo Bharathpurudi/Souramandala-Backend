@@ -8,5 +8,7 @@ public interface CartService {
 	public abstract String createCart(Cart cart) throws CustomerException;
 	
 	public abstract int getTheCartId(int CustId) throws CustomerException;
+	
+	public abstract Cart getCustomerCart(int cartId)throws CustomerException;
 
 }

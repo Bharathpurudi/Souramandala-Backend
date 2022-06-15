@@ -22,7 +22,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 	 * true) public Customer getCustomerById(int custId);
 	 */
 
-	public Customer findByuserNameAndPassword(String userName, String password);
+	public Customer findByuserName(String userName);
 	/*
 	 * @Query(
 	 * value="SELECT * FROM customer c WHERE c.user_name=?1 AND c.password=?2",

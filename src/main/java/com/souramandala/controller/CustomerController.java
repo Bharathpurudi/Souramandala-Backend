@@ -1,6 +1,8 @@
 package com.souramandala.controller;
 
-import java.util.Set;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.souramandala.entity.Constants;
 import com.souramandala.entity.Customer;
-import com.souramandala.entity.OrderEntity;
 import com.souramandala.service.CustomerService;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -26,13 +29,27 @@ import com.souramandala.service.CustomerService;
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
-	
-	
 
 	@PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createCustomer(@RequestBody Customer customer) {
 		return customerService.createUser(customer);
 	}
+
+	@PostMapping(value="/customer/authenticate") public Map<String,String>
+	  generateToken(@RequestBody Customer customer){ 
+		long timestamp =System.currentTimeMillis(); 
+		String token = Jwts.builder().signWith(SignatureAlgorithm.HS256,Constants.API_SECRET_KEY)
+				.setIssuedAt(new Date(timestamp))
+				.setExpiration(new Date(timestamp+Constants.TOKEN_VALIDITY))
+				.claim("userId",customer.getCustId())
+				.claim("userName",customer.getUserName())
+				.claim("email", customer.getMailId())
+				.compact();
+		Map<String,String> map=new HashMap<>();
+		map.put("JWT", token);
+		return map;
+						
+	  }
 
 	@GetMapping(value = "/customer/{custId}")
 	public Customer getCustomerById(@PathVariable int custId) {
@@ -41,9 +58,9 @@ public class CustomerController {
 
 	}
 
-	@GetMapping(value = "/customer/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Customer getCustomerByUsernameAndPassword(@PathVariable String userName, @PathVariable String password) {
-		return customerService.getCustomerByUsernameAndPassword(userName, password);
+	@GetMapping(value = "/customer/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Customer getCustomerByUsername(@PathVariable String userName) {
+		return customerService.getCustomerByUsername(userName);
 	}
 
 	@PutMapping(value = "/customer/updatecustomer", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -68,7 +85,5 @@ public class CustomerController {
 	 * validateOrdersOfCustomer(int custId) { return
 	 * customerService.validateTheOrdersOfCustomer(custId); }
 	 */
-	
-	
 
 }
