@@ -19,6 +19,8 @@ public interface CustomerService {
 	
 	public abstract String deleteCustomerById(int custId) throws CustomerException;
 	
+	public abstract Customer updateFeildsOfCustomer(String firstName, String lastName, String password, String mobNum, String mailId, int custId);
+	
 	//public abstract Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws CustomerException;
 	
 	//public abstract String validateTheOrdersOfCustomer(int custId) throws CustomerException;

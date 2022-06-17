@@ -68,6 +68,13 @@ public class CustomerServiceImpl implements CustomerService {
 		return "User Deleted Successfully";
 	}
 
+	@Override
+	public Customer updateFeildsOfCustomer(String firstName, String lastName, String password, String mobNum,
+			String mailId, int custId) {
+		customerRepo.updateCustomerDetails(firstName, lastName, password, mobNum, mailId,custId);
+		return customerRepo.findBycustId(custId);
+	}
+
 	/*
 	 * @Override public Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws
 	 * CustomerException { Set<OrderEntity> orders =

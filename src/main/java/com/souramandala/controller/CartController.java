@@ -24,7 +24,7 @@ public class CartController {
 	
 
 	@PostMapping(value = "/cart", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String createCart(@RequestBody Cart cart) {
+	public Cart createCart(@RequestBody Cart cart) {
 		return cartService.createCart(cart);
 	}
 	

@@ -72,6 +72,12 @@ public class CustomerController {
 	public String deleteCustomerById(@PathVariable int custId) {
 		return customerService.deleteCustomerById(custId);
 	}
+	
+	@PutMapping(value="/customer/updateFeilds/{firstName}/{lastName}/{password}/{mobNum}/{mailId}/{custId}")
+	public Customer updateTheFeildsOfCust(@PathVariable String firstName,@PathVariable String lastName,@PathVariable String password,@PathVariable String mobNum,@PathVariable String mailId,@PathVariable int custId) {
+		return customerService.updateFeildsOfCustomer(firstName, lastName, password, mobNum, mailId,custId);
+	}
+	
 
 	/*
 	 * @GetMapping(value = "/getordersofcust/{custId}", produces =
