@@ -33,12 +33,16 @@ public class Product {
 	private int stockQuantity;
 	@Column(nullable = false)
 	private String productCategory;
+	@Column(nullable = false)
+	private float rating;
+	@Column(columnDefinition = "VARCHAR(650)")
+	private String description;
 
 	public Product() {
 		super();
 	}
 
-	public Product(int productId, String productName, int productPrice, LocalDate productDom, LocalDate productDoe,
+	public Product(int productId, String productName, int productPrice,float rating,String description, LocalDate productDom, LocalDate productDoe,
 			int warrantyId, String imageUrl, boolean isExpired, int stockQuantity, String productCategory) {
 		super();
 		this.productId = productId;
@@ -51,6 +55,8 @@ public class Product {
 		this.isExpired = isExpired;
 		this.stockQuantity = stockQuantity;
 		this.productCategory = productCategory;
+		this.description=description;
+		this.rating=rating;
 	}
 
 	public int getProductId() {
@@ -132,5 +138,22 @@ public class Product {
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 
 }
