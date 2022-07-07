@@ -36,6 +36,8 @@ public class OrderEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 	@Column(nullable = false)
 	private LocalDate orderDate;
+	@Column(nullable = false)
+	private int addressId;
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderEntity")
 	private List<OrderProducts> orderProducts;
@@ -49,7 +51,7 @@ public class OrderEntity {
 	}
 
 	public OrderEntity(int orderId, String invoiceNum, int orderAmount, int orderDiscount, int checkoutAmount,
-			LocalDate orderDate, List<OrderProducts> orderProducts) {
+			LocalDate orderDate,int addressId, List<OrderProducts> orderProducts) {
 		super();
 		this.orderId = orderId;
 		this.invoiceNum = invoiceNum;
@@ -57,6 +59,7 @@ public class OrderEntity {
 		this.orderDiscount = orderDiscount;
 		this.checkoutAmount = checkoutAmount;
 		this.orderDate = orderDate;
+		this.addressId= addressId;
 		this.orderProducts = orderProducts;
 	}
 
@@ -106,6 +109,14 @@ public class OrderEntity {
 
 	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
+	}
+	
+	public int getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
 	}
 
 	public List<OrderProducts> getOrderProducts() {

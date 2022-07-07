@@ -75,31 +75,16 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepo.findBycustId(custId);
 	}
 
-	/*
-	 * @Override public Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws
-	 * CustomerException { Set<OrderEntity> orders =
-	 * customerRepo.findBycustId(custId).getOrders(); if (orders != null) { return
-	 * orders; } else { throw new
-	 * CustomerException("No orders placed by that customer"); } }
-	 */
+	@Override
+	public Customer updatePassword(String userName, String password) {
+		Customer resultTemp=null;
+		Customer restCust=customerRepo.findByuserName(userName);
+		if(restCust!=null) {
+			customerRepo.updatePassword(userName, password);
+			resultTemp=restCust;
+		}
+		return resultTemp;
+	}
 
-	/*
-	 * @Override public String validateTheOrdersOfCustomer(int custId) throws
-	 * CustomerException { Customer customer = customerRepo.findBycustId(custId);
-	 * String returnString = null; LocalDate currentDate = LocalDate.now(); if
-	 * (customer != null) { Set<OrderEntity> orders =
-	 * getOrdersOfCustByCustId(custId); if (orders != null) { for (OrderEntity order
-	 * : orders) { Set<Product> products = order.getProducts(); if (products !=
-	 * null) { for (Product product : products) { if
-	 * (product.getProductDoe().compareTo(currentDate) <= 0) {
-	 * product.setExpired(true); returnString =
-	 * "Products expired are flagged, Kindly check and remove from order"; } }
-	 * 
-	 * } } } else { throw new
-	 * CustomerException("No orders placed by that Customer"); } } else { throw new
-	 * CustomerException("No Customer with that customer Id"); }
-	 * 
-	 * return returnString; }
-	 */
 
 }

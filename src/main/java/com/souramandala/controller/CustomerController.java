@@ -2,7 +2,9 @@ package com.souramandala.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.souramandala.entity.Address;
 import com.souramandala.entity.Constants;
 import com.souramandala.entity.Customer;
+import com.souramandala.service.AddressService;
 import com.souramandala.service.CustomerService;
 
 import io.jsonwebtoken.Jwts;
@@ -29,6 +33,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private AddressService addressService;
 
 	@PostMapping(value = "/customer", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String createCustomer(@RequestBody Customer customer) {
@@ -76,6 +83,28 @@ public class CustomerController {
 	@PutMapping(value="/customer/updateFeilds/{firstName}/{lastName}/{password}/{mobNum}/{mailId}/{custId}")
 	public Customer updateTheFeildsOfCust(@PathVariable String firstName,@PathVariable String lastName,@PathVariable String password,@PathVariable String mobNum,@PathVariable String mailId,@PathVariable int custId) {
 		return customerService.updateFeildsOfCustomer(firstName, lastName, password, mobNum, mailId,custId);
+	}
+	
+	
+	@PostMapping(value = "customer/addaddress",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Address addCustumerAddress(@RequestBody Address address) {
+		return addressService.addAddress(address);
+	}
+	
+	@DeleteMapping(value="customer/deleteaddress/{addId}")
+	public String deleteCustomer(@PathVariable int addId) {
+		return addressService.deleteAddress(addId);
+	}
+	
+	
+	@GetMapping(value = "customer/getaddressesofcust/{custId}")
+	public List<Address> getCustAddresses(@PathVariable int custId){
+		return addressService.getAddressesOfCust(custId);
+	}
+	
+	@PutMapping(value="customer/updatepassword/{userName}/{password}", produces =MediaType.APPLICATION_JSON_VALUE )
+	public Customer updatePassword(@PathVariable String userName, @PathVariable String password) {
+		return customerService.updatePassword(userName, password);
 	}
 	
 

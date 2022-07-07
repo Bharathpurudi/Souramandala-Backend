@@ -21,6 +21,7 @@ public interface CustomerService {
 	
 	public abstract Customer updateFeildsOfCustomer(String firstName, String lastName, String password, String mobNum, String mailId, int custId);
 	
+	public abstract Customer updatePassword(String userName, String password);
 	//public abstract Set<OrderEntity> getOrdersOfCustByCustId(int custId) throws CustomerException;
 	
 	//public abstract String validateTheOrdersOfCustomer(int custId) throws CustomerException;
